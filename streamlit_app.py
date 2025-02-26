@@ -9,7 +9,7 @@ api_url_options = ["http://54.84.39.154:8000", "http://127.0.0.1:8000"]
 API_URL = st.selectbox("Select API URL", api_url_options)
 
 
-st.title("Literature Retrieval Evidence Summarization, API Url : " + str(API_URL))
+st.title("Literature Retrieval Evidence Summarization, API Url : ")
 
 with st.sidebar:
         st.title("Vector Update")
