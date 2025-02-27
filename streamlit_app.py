@@ -34,11 +34,22 @@ with st.sidebar:
             else:
                 st.error("Error clearing vector store.")
 
+system_prompt_file = st.file_uploader("Choose a system prompt file (optional)", type="txt")
 question = st.text_input("Provide the parameters to generate evidence-based answers")
+
+
 if st.button("Get Answer"):
     if question:
         with st.spinner("Processing..."):
-            response = requests.post(f"{API_URL}/generate_evidence/", data={"question": question})
+            data = {"question": question}
+            files = None
+            if system_prompt_file:
+                system_prompt_content = system_prompt_file.getvalue().decode("utf-8")
+                print("System Prompt: ", system_prompt_content)
+                data["system_prompt"] = system_prompt_content
+            response = requests.post(f"{API_URL}/generate_evidence/", data=data)
+
+            # response = requests.post(f"{API_URL}/generate_evidence/", data={"question": question})
             if response.status_code == 200:
                 data = response.json()
                 st.write("**Answer:**")
